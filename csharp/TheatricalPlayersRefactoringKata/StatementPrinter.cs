@@ -20,11 +20,9 @@ namespace TheatricalPlayersRefactoringKata
             }
         }
         
-        
         public List<PlayInvoice>  Compute(Invoice invoice, Dictionary<string, Play> plays)
         {
-
-            List<PlayInvoice> x = null;
+            List<PlayInvoice> playInvoices = new();
             foreach(var perf in invoice.Performances) 
             {   
   
@@ -34,14 +32,14 @@ namespace TheatricalPlayersRefactoringKata
                 
                 var PlayInvoice = new PlayInvoice { play = play, totalAmount = thisAmount, volumeCredits = volume };
 
-                x.Append(PlayInvoice);
+                playInvoices.Append(PlayInvoice);
             }
-            return x;
+            return playInvoices;
         }
         
         public string Print(Invoice invoice, Dictionary<string, Play> plays)
         {
-            var x = Compute(invoice, plays);
+            var playInvoices = Compute(invoice, plays);
             
             var totalAmount = 0;
             var volumeCredits = 0;
