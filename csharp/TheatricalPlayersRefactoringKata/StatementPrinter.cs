@@ -6,12 +6,13 @@ namespace TheatricalPlayersRefactoringKata
 {
     public class StatementPrinter
     {
+        CultureInfo cultureInfo = new CultureInfo("en-US");
+        
         public string Print(Invoice invoice, Dictionary<string, Play> plays)
         {
             var totalAmount = 0;
             var volumeCredits = 0;
             var result = string.Format("Statement for {0}\n", invoice.Customer);
-            CultureInfo cultureInfo = new CultureInfo("en-US");
 
             foreach(var perf in invoice.Performances) 
             {
