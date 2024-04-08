@@ -13,6 +13,7 @@ namespace TheatricalPlayersRefactoringKata
             public Play play;
             public int totalAmount = 0;
             public int volumeCredits = 0;
+            public int audience = 0;
 
             public PlayInvoice()
             {
@@ -20,7 +21,7 @@ namespace TheatricalPlayersRefactoringKata
             }
         }
         
-        public List<PlayInvoice>  Compute(Invoice invoice, Dictionary<string, Play> plays)
+        public List<PlayInvoice> Compute(Invoice invoice, Dictionary<string, Play> plays)
         {
             List<PlayInvoice> playInvoices = new();
             foreach(var perf in invoice.Performances) 
@@ -30,9 +31,9 @@ namespace TheatricalPlayersRefactoringKata
                 var thisAmount = CalculatePlayAmount(play, perf);
                 var volume = CalculateVolumeCredits(perf, play);
                 
-                var PlayInvoice = new PlayInvoice { play = play, totalAmount = thisAmount, volumeCredits = volume };
+                var PlayInvoice = new PlayInvoice { play = play, totalAmount = thisAmount, volumeCredits = volume, audience = perf.Audience};
 
-                playInvoices.Append(PlayInvoice);
+                playInvoices.Add(PlayInvoice);
             }
             return playInvoices;
         }
