@@ -1,15 +1,48 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 
 namespace TheatricalPlayersRefactoringKata
 {
     public class StatementPrinter
     {
         CultureInfo cultureInfo = new CultureInfo("en-US");
+        public struct PlayInvoice
+        {
+            public Play play;
+            public int totalAmount = 0;
+            public int volumeCredits = 0;
+
+            public PlayInvoice()
+            {
+                play = null;
+            }
+        }
+        
+        
+        public List<PlayInvoice>  Compute(Invoice invoice, Dictionary<string, Play> plays)
+        {
+
+            List<PlayInvoice> x = null;
+            foreach(var perf in invoice.Performances) 
+            {   
+  
+                var play = plays[perf.PlayID];
+                var thisAmount = CalculatePlayAmount(play, perf);
+                var volume = CalculateVolumeCredits(perf, play);
+                
+                var PlayInvoice = new PlayInvoice { play = play, totalAmount = thisAmount, volumeCredits = volume };
+
+                x.Append(PlayInvoice);
+            }
+            return x;
+        }
         
         public string Print(Invoice invoice, Dictionary<string, Play> plays)
         {
+            var x = Compute(invoice, plays);
+            
             var totalAmount = 0;
             var volumeCredits = 0;
             var result = string.Format("Statement for {0}\n", invoice.Customer);
@@ -29,6 +62,7 @@ namespace TheatricalPlayersRefactoringKata
             return result;
         }
 
+ 
         private static int CalculateVolumeCredits(Performance perf, Play play)
         {
             // add volume credits
